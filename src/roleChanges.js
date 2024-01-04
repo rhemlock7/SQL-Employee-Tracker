@@ -1,8 +1,8 @@
 const addEmployee = [
     {
         type: 'text',
-        message: 'What is the name of the role?',
-        name: 'roleVerification',
+        message: 'What is the name of their new role?',
+        name: 'newRole',
     },
     {
         type: 'text',

@@ -1,9 +1,9 @@
-const addEmployee = [
+const addDepartment = [
     {
         type: 'text',
         message: 'What is the name of the department?',
-        name: 'departmentVerification',
+        name: 'newDepartment',
     }
 ];
 
-module.exports = addEmployee;
+module.exports = addDepartment;
