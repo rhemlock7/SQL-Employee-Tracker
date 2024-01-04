@@ -8,18 +8,29 @@ const addEmployee = require('./addEmployee');
 const roleChanges = require('./roleChanges');
 
 // Create the connection to my SQL database
-const connection = mysql.createConnection({
+const db = mysql.createConnection({
     host: '127.0.0.1',
     user: 'root',
     password: 'rootroot',
-    database: 'test'
+    database: 'business_db'
 });
 
 // First Prompt asking what the user wants to receive
 const firstPrompt = async () => {
     const introAnswers = await inquirer.prompt(introPrompt);
-    console.log('Answers from introPrompt:', introAnswers);
+    console.log('RESPONSE:', introAnswers.options);
+
+    if (introAnswers.options === 'View All Departments') {
+        console.log('Showing departments!');
+
+        // Query database
+        db.query('SELECT * FROM business_db', function (err, results) {
+            console.log(results);
+        });
+    }
 }
+
+
 
 // ;(async () => {
 
