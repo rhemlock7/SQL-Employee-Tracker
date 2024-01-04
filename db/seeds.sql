@@ -7,10 +7,10 @@ VALUES (1, 'John', 'Doe', 1, NULL),
 
 -- Insert data into 'departments' table
 INSERT INTO departments (id, name)
-VALUES (1, 'Engineering'),
-    (2, 'Finance'),
-    (3, 'Legal'),
-    (4, 'Sales')
+VALUES ('Engineering'),
+    ('Finance'),
+    ('Legal'),
+    ('Sales')
 
 -- Insert data into 'roles' table
 INSERT INTO roles (id, title, salary, department_id)

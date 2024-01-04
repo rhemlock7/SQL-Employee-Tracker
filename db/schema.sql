@@ -12,7 +12,7 @@ CREATE TABLE employees(
 );
 
 CREATE TABLE departments(
-    id INT NOT NULL,
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(30) NOT NULL
 );
 
