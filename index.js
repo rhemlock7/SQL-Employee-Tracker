@@ -21,14 +21,17 @@ const firstPrompt = async () => {
     const introAnswers = await inquirer.prompt(introPrompt);
 
     switch (introAnswers.options) {
-        // * COMPLETE
+        
+        // TODO -> Need to update employee showcase to display ALL information
         case 'View All Employees':
-            console.log('Showing all employees!!');
+            console.log('Update this to show ALL employee data.');
             // Query database
-            db.query('SELECT * FROM business_db.employees', function (err, results) {
-                console.table(results);
-                firstPrompt();
-            });
+            // db.query('SELECT * FROM business_db.employees', function (err, results) {
+            //     console.table(results);
+            //     firstPrompt();
+            // });
+
+            firstPrompt();
             break;
 
         // TODO
