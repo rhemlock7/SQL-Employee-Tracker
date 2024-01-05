@@ -1,7 +1,7 @@
 -- Insert data into 'departments' table
 INSERT INTO departments (name) VALUES
-('Engineering'),
-('Finance'),
+('Marketing'),
+('Human Resources'),
 ('Legal'),
 ('Sales');
 

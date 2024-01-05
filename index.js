@@ -21,14 +21,17 @@ const firstPrompt = async () => {
     const introAnswers = await inquirer.prompt(introPrompt);
 
     switch (introAnswers.options) {
-        // * COMPLETE
+
+        // TODO -> Need to update employee showcase to display ALL information
         case 'View All Employees':
-            console.log('Showing all employees!!');
+            console.log('Update this to show ALL employee data.');
             // Query database
-            db.query('SELECT * FROM business_db.employees', function (err, results) {
+            db.query('SELECT * FROM all_employee_data', function (err, results) {
                 console.table(results);
                 firstPrompt();
             });
+
+            firstPrompt();
             break;
 
         // TODO
@@ -72,7 +75,7 @@ const firstPrompt = async () => {
         case 'View All Roles':
             console.log('Viewing All Roles');
             // Query database
-            db.query('SELECT * FROM business_db.roles', function (err, results) {
+            db.query('SELECT * FROM roles_with_department;', function (err, results) {
                 console.table(results);
                 firstPrompt();
             });
@@ -122,7 +125,7 @@ const firstPrompt = async () => {
         // * COMPLETE
         case 'Add Department':
             console.log('Adding Department');
-            // TODO: logic for adding a department goes here
+            // Logic for adding a department
             const departmentAdded = await inquirer.prompt(addDepartment);
 
             const departmentResponse = departmentAdded.newDepartment;
