@@ -34,7 +34,7 @@ const firstPrompt = async () => {
             firstPrompt();
             break;
 
-        // TODO
+        // * COMPLETE
         case 'Add Employee':
             console.log('Adding Employee');
 
@@ -47,16 +47,40 @@ const firstPrompt = async () => {
             const employeeRole = employeeAnswers.employeeRole;
             const manager = employeeAnswers.manager;
 
+            const splitManagerName = manager.split(' ');
+            const managerFirstName = splitManagerName[0];
+            const managerLastName = splitManagerName[1];
 
-            db.query('INSERT INTO business_db.employees (first_name, last_name) VALUES (?)', [firstName, lastName, employeeRole, manager], function (err, results) {
+            // Get the role ID based on user input
+            db.query('SELECT id FROM roles WHERE title=?', [employeeRole], function (err, results) {
                 if (err) {
-                    console.error(err)
-                    return;
+                    console.error(err);
+                    firstPrompt()
+                }
+                
+                let roleID = results[0].id;
+                
+                // Get the manager ID based on user input
+                db.query('SELECT id FROM employees WHERE first_name = ? AND last_name = ?', [managerFirstName, managerLastName], function (err, results) {
+                    let managerID = [];
+                if (err) {
+                    console.error(err);
+                    firstPrompt()
+                } else if (managerID) {
+                    managerID = null;
                 } else {
-                    console.log(`Added ${departmentResponse} to departments db`)
+                    managerID = results[0].id;
                 }
 
-                firstPrompt();
+                    db.query('INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)', [firstName, lastName, roleID, managerID], function (err, results) {
+                        if (err) {
+                            console.error(err);
+                            firstPrompt()
+                        }
+                        console.log('Successfully added employee')
+                        firstPrompt();
+                    })
+                })
             });
 
             break;
