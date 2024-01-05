@@ -4,9 +4,9 @@ const mysql = require('mysql2');
 
 // Import the prompts created from their specific js files.
 const introPrompt = require('./src/introPrompt');
-const newDepartment = require('./src/newDepartment');
 const roleChanges = require('./src/roleChanges');
 const addDepartment = require('./src/newDepartment');
+const addEmployee = require('./src/addEmployee');
 
 // Create the connection to my SQL database
 const db = mysql.createConnection({
@@ -19,9 +19,9 @@ const db = mysql.createConnection({
 // First Prompt asking what the user wants to receive
 const firstPrompt = async () => {
     const introAnswers = await inquirer.prompt(introPrompt);
-    //console.log('RESPONSE:', introAnswers.options);
 
     switch (introAnswers.options) {
+        // * COMPLETE
         case 'View All Employees':
             console.log('Showing all employees!!');
             // Query database
@@ -31,30 +31,44 @@ const firstPrompt = async () => {
             });
             break;
 
+        // TODO
         case 'Add Employee':
             console.log('Adding Employee');
 
-            // TODO: logic for adding an employee goes here
+            // User prompts
+            const employeeAnswers = await inquirer.prompt(addEmployee);
 
-            firstPrompt();
-            // End the conditional
+            // Formatted user inputs
+            const firstName = employeeAnswers.firstName;
+            const lastName = employeeAnswers.lastName;
+            const employeeRole = employeeAnswers.employeeRole;
+            const manager = employeeAnswers.manager;
+
+
+            db.query('INSERT INTO business_db.employees (first_name, last_name) VALUES (?)', [firstName, lastName, employeeRole, manager], function (err, results) {
+                if (err) {
+                    console.error(err)
+                    return;
+                } else {
+                    console.log(`Added ${departmentResponse} to departments db`)
+                }
+
+                firstPrompt();
+            });
+
             break;
 
+        // TODO
         case 'Update Employee Role':
             console.log('Updating Employee Role');
 
             // Logic for updating an employee role
-            const roleChangeAnswers = await inquirer.prompt(roleChanges);
-            console.log('Answers from roleChanges:', roleChangeAnswers);
 
-            // User inputs
-            const newRole = roleChangeAnswers.newRole;
-            const roleSalary = roleChangeAnswers.roleSalary;
-            const roleDepartment = roleChangeAnswers.roleDepartment;
 
             firstPrompt();
             break;
 
+        // * COMPLETE
         case 'View All Roles':
             console.log('Viewing All Roles');
             // Query database
@@ -64,12 +78,38 @@ const firstPrompt = async () => {
             });
             break;
 
+        // TODO:
         case 'Add Role':
             console.log('Adding Role');
+
+            // User prompts
+            const roleChangeAnswers = await inquirer.prompt(roleChanges);
+
+            // Formatted user inputs
+            const newRole = roleChangeAnswers.newRole;
+            const roleSalary = roleChangeAnswers.roleSalary;
+            const roleDepartment = roleChangeAnswers.roleDepartment;
+
+            console.log(newRole);
+            console.log(roleSalary);
+            console.log(roleDepartment);
+
             // TODO: logic for adding a role goes here
+            // db.query('INSERT INTO business_db.roles (title, salary, department_id) VALUES (?)', [departmentResponse], function (err, results) {
+            //     if (err) {
+            //         console.error(err)
+            //         return;
+            //     } else {
+            //         console.log(`Added ${departmentResponse} to departments db`)
+            //     }
+
+            //     firstPrompt();
+            // });
+
             firstPrompt();
             break;
 
+        // * COMPLETE
         case 'View All Departments':
             console.log('Showing departments!');
             // Query database
@@ -79,6 +119,7 @@ const firstPrompt = async () => {
             });
             break;
 
+        // * COMPLETE
         case 'Add Department':
             console.log('Adding Department');
             // TODO: logic for adding a department goes here
@@ -100,6 +141,7 @@ const firstPrompt = async () => {
             });
             break;
 
+        // * COMPLETE
         case 'Quit':
             console.log('Quitting');
             // Quit the program
@@ -114,13 +156,3 @@ const firstPrompt = async () => {
 
 // Call the first prompt upon page load
 firstPrompt();
-
-
-
-
-// ;(async () => {
-
-//     
-
-
-// })();

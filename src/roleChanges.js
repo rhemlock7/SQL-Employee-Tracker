@@ -1,4 +1,4 @@
-const addEmployee = [
+const addRole = [
     {
         type: 'text',
         message: 'What is the name of their new role?',
@@ -17,6 +17,4 @@ const addEmployee = [
     }
 ];
 
-module.exports = addEmployee;
-
-
+module.exports = addRole;
