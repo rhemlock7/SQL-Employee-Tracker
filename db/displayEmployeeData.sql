@@ -1,17 +1,24 @@
 USE business_db;
+
+-- Drop the view if it exists
+DROP VIEW IF EXISTS all_employee_data;
+
 CREATE VIEW all_employee_data AS
 SELECT
-    employees.id,
-    employees.first_name,
-    employees.last_name,
-    employees.role_id,
-    roles.department_id AS department,
-    roles.salary AS salary
+    e.id,
+    e.first_name,
+    e.last_name,
+    r.title AS role,
+    d.name AS department,
+    r.salary,
+    CONCAT(m.first_name, ' ', m.last_name) AS manager
 FROM
-    employees
+    employees e
 JOIN
-    roles ON employees.role_id = roles.id
+    roles r ON e.role_id = r.id
 JOIN
-    departments ON roles.department_id = departments.id;
+    departments d ON r.department_id = d.id
+LEFT JOIN
+    employees m ON e.manager_id = m.id;
 
 SELECT * FROM all_employee_data;
